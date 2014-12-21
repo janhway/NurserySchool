@@ -19,7 +19,7 @@ public class UserList {
 		this.userList = userList;
 	}
 
-	@XmlElement(name = "userName")
+	@XmlElement(name = "userList")
 	public List<UserNode> getUserList() {
 		return userList;
 	}

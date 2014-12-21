@@ -8,8 +8,8 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "TEACHER")
-public class Teacher implements Serializable {
+@Table(name = "TEACHERS")
+public class Teachers implements Serializable {
 
 	private static final long serialVersionUID = 2008853282348896271L;
 
@@ -35,7 +35,7 @@ public class Teacher implements Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Teacher)) {
+		if (!(obj instanceof Teachers)) {
 			return false;
 		}
 
@@ -43,7 +43,7 @@ public class Teacher implements Serializable {
 			return true;
 		}
 
-		Teacher other = (Teacher) obj;
+		Teachers other = (Teachers) obj;
 
 		return (this.teacherId.equals(other.teacherId));
 	}

@@ -7,31 +7,36 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 @Embeddable
 public class SchoolMasterId implements Serializable {
 
 	private static final long serialVersionUID = 7338973140234139520L;
 
-	private User user;
-	private School school;
+	private Users user;
+	private Schools school;
 
-	@ManyToOne //(cascade = CascadeType.ALL, optional = false)
+	@ManyToOne
+	// (cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "SCHOOLID", referencedColumnName = "ID")
-	public School getSchool() {
+	public Schools getSchool() {
 		return school;
 	}
 
-	public void setSchool(School school) {
+	public void setSchool(Schools school) {
 		this.school = school;
 	}
 
-	@ManyToOne //(cascade = CascadeType.ALL, optional = false)
+	@ManyToOne
+	// (cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "USERID", referencedColumnName = "ID")
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 
@@ -47,15 +52,15 @@ public class SchoolMasterId implements Serializable {
 
 		SchoolMasterId other = (SchoolMasterId) obj;
 
-		return (this.user.getId() == other.user.getId() && 
-				this.school.getId() == other.school.getId());
+		return new EqualsBuilder()
+				.append(this.user.getId(), other.user.getId())
+				.append(this.school.getId(), other.school.getId()).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-		int result = 17;
-		result = result * 31 + user.getId();
-		result = result * 31 + school.getId();
-		return result;
+
+		return new HashCodeBuilder(17, 31).append(user.getId())
+				.append(school.getId()).toHashCode();
 	}
 }

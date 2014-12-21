@@ -1,8 +1,10 @@
 package com.mykidedu.nurseryschool.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,34 +12,38 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 @Entity
-@Table(name = "USERS", indexes ={@Index(name ="USERS_USERNAME_INDEX", columnList = "USERNAME", unique=true)})
-public class User implements Serializable {
+@Table(name = "USERS", indexes = { @Index(name = "USERS_USERNAME_INDEX", columnList = "USERNAME", unique = true) })
+public class Users implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int id;
+	private long id;
 	private String userName;
 	private String password;
 
 	private String firstName;
 	private String lastName;
+	private Sex sex;
 
 	private Role role;
 
-	private String birthday;
-	private String address;
-	private String postalNum;
+	private Date birthday;
+	private Address address;
 	private String phone;
+	private String email;
 
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -87,30 +93,21 @@ public class User implements Serializable {
 	}
 
 	@Column(name = "BIRTHDAY")
-	public String getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 
-	@Column(name = "ADDRESS")
-	public String getAddress() {
+	@Embedded
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
-	}
-
-	@Column(name = "POSTALNUM")
-	public String getPostalNum() {
-		return postalNum;
-	}
-
-	public void setPostalNum(String postalNum) {
-		this.postalNum = postalNum;
 	}
 
 	@Column(name = "PHONE")
@@ -121,10 +118,27 @@ public class User implements Serializable {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	@Column(name = "SEX")
+	public Sex getSex() {
+		return sex;
+	}
+
+	public void setSex(Sex sex) {
+		this.sex = sex;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof User)) {
+		if (!(obj instanceof Users)) {
 			return false;
 		}
 
@@ -132,17 +146,18 @@ public class User implements Serializable {
 			return true;
 		}
 
-		User other = (User) obj;
+		Users other = (Users) obj;
 
-		return (this.id == other.id) && (this.userName == other.userName);
+		return new EqualsBuilder().append(this.id, other.id)
+				.append(this.userName, other.userName).isEquals();
+
 	}
 
 	@Override
 	public int hashCode() {
-		int result = 17;
-		result = result * 31 + id;
-		result = result * 31 + userName.hashCode();
-
-		return result;
+		return new HashCodeBuilder(17, 37).append(id).append(userName)
+				.toHashCode();
 	}
+
+
 }

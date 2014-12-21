@@ -7,31 +7,36 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 @Embeddable
 public class TeacherId implements Serializable {
 
 	private static final long serialVersionUID = 7338973140234139520L;
 
-	private User user;
-	private ClassRoom classRoom;
+	private Users user;
+	private Classes classRoom;
 
-	@ManyToOne //(cascade = CascadeType.ALL, optional = false)
+	@ManyToOne
+	// (cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "CLASSID", referencedColumnName = "ID")
-	public ClassRoom getClassRoom() {
+	public Classes getClassRoom() {
 		return classRoom;
 	}
 
-	public void setClassRoom(ClassRoom classRoom) {
+	public void setClassRoom(Classes classRoom) {
 		this.classRoom = classRoom;
 	}
 
-	@ManyToOne //(cascade = CascadeType.ALL, optional = false)
+	@ManyToOne
+	// (cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "USERID", referencedColumnName = "ID")
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 
@@ -47,17 +52,17 @@ public class TeacherId implements Serializable {
 
 		TeacherId other = (TeacherId) obj;
 
-		return (this.user.getId() == other.user.getId() && 
-				this.classRoom.getId() == other.classRoom.getId());
+		return new EqualsBuilder()
+				.append(this.user.getId(), other.user.getId())
+				.append(this.classRoom.getId(), other.classRoom.getId())
+				.isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-		int result = 17;
-		result = result * 31 + user.getId();
-		result = result * 31 + classRoom.getId();
-		return result;
+
+		return new HashCodeBuilder(17, 37).append(user.getId())
+				.append(classRoom.getId()).toHashCode();
 	}
 
-	
 }
