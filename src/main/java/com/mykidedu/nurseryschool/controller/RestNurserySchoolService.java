@@ -77,19 +77,17 @@ public class RestNurserySchoolService {
 	@POST
     @Path("/user")
 	@Consumes("application/json;charset=UTF-8")
-	@Produces("application/text;charset=UTF-8")
+	@Produces("text/plain;charset=UTF-8")
 	public Response createUser(CreateUserReq req) {
 		
 		if (StringUtils.isEmpty(req.getUserName())
 				|| StringUtils.isEmpty(req.getPassword())) {
-			//throw new WebApplicationException("username or password is null.", Status.BAD_REQUEST);
-			return Response.status(Status.BAD_REQUEST).build();
+			return Response.status(Status.BAD_REQUEST).entity("username or password is null").build();
 		}
 						
 		Users existUser = userDao.getUser(req.getUserName());
 		if (existUser != null)  {
-			//throw new WebApplicationException("username exist.", Status.BAD_REQUEST);
-			return Response.status(Status.BAD_REQUEST).build();
+			return Response.status(Status.BAD_REQUEST).entity("username exists.").build();
 		}
 		
 		Users user = crtUser(req);		
@@ -107,12 +105,14 @@ public class RestNurserySchoolService {
 		
 		if (StringUtils.isEmpty(login.getUserName())
 				|| login.getPassword() == null) {
-			throw new WebApplicationException("username or password is null.", Status.BAD_REQUEST);
+			Response rp = Response.status(Status.BAD_REQUEST).entity("username or password is null.").build();
+			throw new WebApplicationException(rp);
 		}
 		
 		Users user = userDao.getUser(login.getUserName());
 		if (user == null || !user.getPassword().equals(login.getPassword())) {
-			throw new WebApplicationException("username or password mismatch.", Status.BAD_REQUEST);
+			Response rp = Response.status(Status.BAD_REQUEST).entity("username or password mismatch.").build();
+			throw new WebApplicationException(rp);
 		}
 
 		String token = UserToken.makeEncodeToken(user.getId());
@@ -128,24 +128,22 @@ public class RestNurserySchoolService {
 	@POST
     @Path("/school")
 	@Consumes("application/json;charset=UTF-8")
-	@Produces("application/text;charset=UTF-8")
+	@Produces("text/plain;charset=UTF-8")
 	public Response createSchool(CreateSchoolReq req) {
 		
 		if (StringUtils.isEmpty(req.getName())
 				|| StringUtils.isEmpty(req.getAddress())) {
-			//throw new WebApplicationException("username or password is null.", Status.BAD_REQUEST);
-			return Response.status(Status.BAD_REQUEST).build();
+			return Response.status(Status.BAD_REQUEST).entity("username or password is null.").build();
 		}
 						
 		Schools existSchool = schoolDao.getSchool(req.getName());
 		if (existSchool != null)  {
-			//throw new WebApplicationException("school exist.", Status.BAD_REQUEST);
-			return Response.status(Status.BAD_REQUEST).build();
+			return Response.status(Status.BAD_REQUEST).entity("school exists.").build();
 		}
 		
 		Schools school = new Schools();
 		school.setName(req.getName());
-		//school.setAddress(req.getAddress()); fix it later.
+		school.setAddress(req.getAddress()); 
 		school.setDescription(req.getDescription());
 		
 		schoolDao.create(school);

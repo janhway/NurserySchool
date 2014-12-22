@@ -11,14 +11,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 @Entity
-@Table(name = "SCHOOLS")
+@Table(name = "SCHOOLS", indexes = { @Index(name = "SCHOOLS_NAME_INDEX", columnList = "NAME", unique = true) })
 public class Schools implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +42,7 @@ public class Schools implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "NAME", unique = true)
+	@Column(name = "NAME")
 	public String getName() {
 		return name;
 	}
@@ -119,11 +117,13 @@ public class Schools implements Serializable {
 
 		Schools other = (Schools) obj;
 
-		return new EqualsBuilder().append(this.id, other.id).append(this.name,other.name).isEquals();
+        // Using business key equality
+		return this.name.equals(other.name);
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(id).append(name).toHashCode();
+		//Using business key equality
+		return name.hashCode();
 	}
 }

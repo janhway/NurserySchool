@@ -23,8 +23,8 @@ public class Classes implements Serializable {
 	private long id;
 	private String name;
 	private Schools school;
-	private Classes classes;
-	
+	private Grades grade;
+
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,7 +36,7 @@ public class Classes implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "NAME", unique = true)
+	@Column(name = "NAME", nullable = false)
 	public String getName() {
 		return name;
 	}
@@ -46,7 +46,6 @@ public class Classes implements Serializable {
 	}
 
 	@ManyToOne
-	// (cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "SCHOOLID", referencedColumnName = "ID")
 	public Schools getSchool() {
 		return school;
@@ -55,16 +54,15 @@ public class Classes implements Serializable {
 	public void setSchool(Schools school) {
 		this.school = school;
 	}
-	
+
 	@ManyToOne
-	// (cascade = CascadeType.ALL, optional = false)
-	@JoinColumn(name = "CLASSID", referencedColumnName = "ID")
-	public Classes getClasses() {
-		return classes;
+	@JoinColumn(name = "GRADEID", referencedColumnName = "ID")
+	public Grades getGrades() {
+		return grade;
 	}
 
-	public void setClasses(Classes classes) {
-		this.classes = classes;
+	public void setGrades(Grades grade) {
+		this.grade = grade;
 	}
 
 	@Override
@@ -79,13 +77,17 @@ public class Classes implements Serializable {
 
 		Classes other = (Classes) obj;
 
-		return new EqualsBuilder().append(this.id, other.id)
+		// Using business key equality
+		return new EqualsBuilder()
+				.append(this.school.getName(), other.school.getName())
+				.append(this.grade.getName(), other.grade.getName())
 				.append(this.name, other.name).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
 
-		return new HashCodeBuilder(17, 47).append(id).append(name).toHashCode();
+		return new HashCodeBuilder(17, 47).append(school.getName())
+				.append(grade.getName()).append(name).toHashCode();
 	}
 }

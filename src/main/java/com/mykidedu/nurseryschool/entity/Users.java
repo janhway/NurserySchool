@@ -119,6 +119,7 @@ public class Users implements Serializable {
 		this.phone = phone;
 	}
 	
+	@Column(name = "EMAIL")
 	public String getEmail() {
 		return email;
 	}
@@ -148,15 +149,15 @@ public class Users implements Serializable {
 
 		Users other = (Users) obj;
 
-		return new EqualsBuilder().append(this.id, other.id)
-				.append(this.userName, other.userName).isEquals();
+        // Using business key equality
+		return this.userName.equals(other.userName);
 
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(id).append(userName)
-				.toHashCode();
+        // Using business key equality
+		return userName.hashCode();
 	}
 
 

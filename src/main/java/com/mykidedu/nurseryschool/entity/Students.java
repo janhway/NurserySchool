@@ -1,6 +1,7 @@
 package com.mykidedu.nurseryschool.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +23,9 @@ public class Students implements Serializable {
 
 	private long id;
 	private String name;
-	private String birthday;
+	private Date birthday;
+	private Sex sex;
+	private String description;
 	private Classes classes;
 
 	@Id
@@ -36,7 +39,7 @@ public class Students implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "NAME", unique = true)
+	@Column(name = "NAME")
 	public String getName() {
 		return name;
 	}
@@ -46,11 +49,11 @@ public class Students implements Serializable {
 	}
 
 	@Column(name = "BIRTHDAY")
-	public String getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 
@@ -77,13 +80,32 @@ public class Students implements Serializable {
 
 		Students other = (Students) obj;
 
-		return new EqualsBuilder().append(this.id, other.id)
+		// 这样合适否？ 每次必须把class/grade/school全部查询出来
+		return new EqualsBuilder().append(this.classes, other.classes)
 				.append(this.name, other.name).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(id).append(name).toHashCode();
+		return new HashCodeBuilder(17, 37).append(classes).append(name).toHashCode();
+	}
+
+	@Column(name = "SEX")
+	public Sex getSex() {
+		return sex;
+	}
+
+	public void setSex(Sex sex) {
+		this.sex = sex;
+	}
+
+	@Column(name = "DESCRIPTION")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

@@ -2,7 +2,10 @@ package com.mykidedu.nurseryschool.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "Address")
 @Embeddable
 public class Address {
 	private String country;
@@ -11,6 +14,7 @@ public class Address {
 	private String street;
 	private long zipCode;
 
+	@XmlElement(name="country",required=false)
 	@Column(name = "COUNTRY", length=64)
 	public String getCountry() {
 		return country;
@@ -20,6 +24,7 @@ public class Address {
 		this.country = country;
 	}
 
+	@XmlElement(name="province",required=false)
 	@Column(name = "PROVINCE", length=16)
 	public String getProvince() {
 		return province;
@@ -29,6 +34,7 @@ public class Address {
 		this.province = province;
 	}
 
+	@XmlElement(name="city",required=false)
 	@Column(name = "CITY", length=16)
 	public String getCity() {
 		return city;
@@ -38,6 +44,7 @@ public class Address {
 		this.city = city;
 	}
 
+	@XmlElement(name="street",required=false)
 	@Column(name = "STREET", length=256)
 	public String getStreet() {
 		return street;
@@ -47,6 +54,7 @@ public class Address {
 		this.street = street;
 	}
 	
+	@XmlElement(name="zipCode",required=false)
 	@Column(name = "ZIPCODE")
 	public long getZipCode() {
 		return zipCode;
