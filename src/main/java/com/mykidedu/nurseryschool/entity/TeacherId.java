@@ -2,7 +2,6 @@ package com.mykidedu.nurseryschool.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,17 +15,17 @@ public class TeacherId implements Serializable {
 	private static final long serialVersionUID = 7338973140234139520L;
 
 	private User user;
-	private Classes classRoom;
+	private Classes classes;
 
 	@ManyToOne
 	// (cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "CLASSID", referencedColumnName = "ID")
-	public Classes getClassRoom() {
-		return classRoom;
+	public Classes getClasses() {
+		return classes;
 	}
 
-	public void setClassRoom(Classes classRoom) {
-		this.classRoom = classRoom;
+	public void setClasses(Classes classRoom) {
+		this.classes = classRoom;
 	}
 
 	@ManyToOne
@@ -54,7 +53,7 @@ public class TeacherId implements Serializable {
 
 		return new EqualsBuilder()
 				.append(this.user.getId(), other.user.getId())
-				.append(this.classRoom.getId(), other.classRoom.getId())
+				.append(this.classes.getId(), other.classes.getId())
 				.isEquals();
 	}
 
@@ -62,7 +61,7 @@ public class TeacherId implements Serializable {
 	public int hashCode() {
 
 		return new HashCodeBuilder(17, 37).append(user.getId())
-				.append(classRoom.getId()).toHashCode();
+				.append(classes.getId()).toHashCode();
 	}
 
 }

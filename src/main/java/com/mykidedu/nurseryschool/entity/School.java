@@ -29,7 +29,7 @@ public class School implements Serializable {
 	private String description;
 
 	private List<Grade> gradeList;
-	private List<Classes> classList;
+	//private List<Classes> classList;
 
 	@Id
 	@Column(name = "ID")
@@ -78,14 +78,14 @@ public class School implements Serializable {
 		this.phone = phone;
 	}
 
-	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	public List<Classes> getClassList() {
-		return classList;
-	}
-
-	public void setClassList(List<Classes> classList) {
-		this.classList = classList;
-	}
+//	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+//	public List<Classes> getClassList() {
+//		return classList;
+//	}
+//
+//	public void setClassList(List<Classes> classList) {
+//		this.classList = classList;
+//	}
 	
 	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	public List<Grade> getGradeList() {

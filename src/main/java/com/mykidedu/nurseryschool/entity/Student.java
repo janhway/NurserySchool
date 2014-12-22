@@ -58,7 +58,6 @@ public class Student implements Serializable {
 	}
 
 	@ManyToOne
-	// (cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "CLASSID", referencedColumnName = "ID")
 	public Classes getClasses() {
 		return classes;

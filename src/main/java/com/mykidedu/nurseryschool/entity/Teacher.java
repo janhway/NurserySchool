@@ -2,6 +2,7 @@ package com.mykidedu.nurseryschool.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,7 +15,7 @@ public class Teacher implements Serializable {
 	private static final long serialVersionUID = 2008853282348896271L;
 
 	private TeacherId teacherId;
-	private String subRole;
+	private TeacherSubRole subRole;
 
 	@Id
 	public TeacherId getTeacherId() {
@@ -25,11 +26,12 @@ public class Teacher implements Serializable {
 		this.teacherId = teacherId;
 	}
 	
-	public String getSubRole() {
+	@Column(name = "SUBROLE", nullable = false)
+	public TeacherSubRole getSubRole() {
 		return subRole;
 	}
 
-	public void setSubRole(String subRole) {
+	public void setSubRole(TeacherSubRole subRole) {
 		this.subRole = subRole;
 	}
 	

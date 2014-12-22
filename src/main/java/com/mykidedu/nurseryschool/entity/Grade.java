@@ -1,14 +1,18 @@
 package com.mykidedu.nurseryschool.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -23,7 +27,8 @@ public class Grade implements Serializable {
 	private long id;
 	private String name;
 	private School school;
-
+	private List<Classes> classList;
+	
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,6 +57,15 @@ public class Grade implements Serializable {
 
 	public void setSchool(School school) {
 		this.school = school;
+	}
+	
+	@OneToMany(mappedBy = "grade", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	public List<Classes> getClassList() {
+		return classList;
+	}
+
+	public void setClassList(List<Classes> classList) {
+		this.classList = classList;
 	}
 
 	@Override

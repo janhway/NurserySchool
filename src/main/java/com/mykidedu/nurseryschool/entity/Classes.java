@@ -1,14 +1,18 @@
 package com.mykidedu.nurseryschool.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -22,8 +26,10 @@ public class Classes implements Serializable {
 
 	private long id;
 	private String name;
-	private School school;
+	// private School school;
 	private Grade grade;
+	private List<Student> studentList; 
+	//teacher list.  add it later. 
 
 	@Id
 	@Column(name = "ID")
@@ -45,15 +51,15 @@ public class Classes implements Serializable {
 		this.name = name;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "SCHOOLID", referencedColumnName = "ID")
-	public School getSchool() {
-		return school;
-	}
-
-	public void setSchool(School school) {
-		this.school = school;
-	}
+	// @ManyToOne
+	// @JoinColumn(name = "SCHOOLID", referencedColumnName = "ID")
+	// public School getSchool() {
+	// return school;
+	// }
+	//
+	// public void setSchool(School school) {
+	// this.school = school;
+	// }
 
 	@ManyToOne
 	@JoinColumn(name = "GRADEID", referencedColumnName = "ID")
@@ -63,6 +69,15 @@ public class Classes implements Serializable {
 
 	public void setGrades(Grade grade) {
 		this.grade = grade;
+	}
+	
+	@OneToMany(mappedBy = "classes", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	public List<Student> getStudentList() {
+		return studentList;
+	}
+
+	public void setStudentList(List<Student> studentList) {
+		this.studentList = studentList;
 	}
 
 	@Override
@@ -78,16 +93,16 @@ public class Classes implements Serializable {
 		Classes other = (Classes) obj;
 
 		// Using business key equality
-		return new EqualsBuilder()
-				.append(this.school.getName(), other.school.getName())
-				.append(this.grade.getName(), other.grade.getName())
+		return new EqualsBuilder().append(this.grade, other.grade)
 				.append(this.name, other.name).isEquals();
 	}
 
 	@Override
 	public int hashCode() {
 
-		return new HashCodeBuilder(17, 47).append(school.getName())
-				.append(grade.getName()).append(name).toHashCode();
+		return new HashCodeBuilder(17, 47).append(grade.getName()).append(name)
+				.toHashCode();
 	}
+
+
 }
