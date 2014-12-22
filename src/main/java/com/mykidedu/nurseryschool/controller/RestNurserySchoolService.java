@@ -21,9 +21,9 @@ import com.mykidedu.nurseryschool.dao.SchoolDao;
 import com.mykidedu.nurseryschool.dao.SchoolMasterDao;
 import com.mykidedu.nurseryschool.dao.UserDao;
 import com.mykidedu.nurseryschool.entity.Role;
-import com.mykidedu.nurseryschool.entity.Schools;
+import com.mykidedu.nurseryschool.entity.School;
 import com.mykidedu.nurseryschool.entity.SchoolMaster;
-import com.mykidedu.nurseryschool.entity.Users;
+import com.mykidedu.nurseryschool.entity.User;
 import com.mykidedu.nurseryschool.msg.CreateSchoolMasterReq;
 import com.mykidedu.nurseryschool.msg.CreateSchoolReq;
 import com.mykidedu.nurseryschool.msg.CreateUserReq;
@@ -60,9 +60,9 @@ public class RestNurserySchoolService {
 	public UserList getAllUser() {
 		
 		List<UserNode> ulRsp = new ArrayList<UserNode>();
-		List<Users> ul = userDao.list();
+		List<User> ul = userDao.list();
 		
-		for (Users u:ul) {
+		for (User u:ul) {
 			UserNode uRsp = new UserNode();
 			uRsp.setUserName(u.getUserName());
 			uRsp.setFirstName(u.getFirstName());
@@ -85,12 +85,12 @@ public class RestNurserySchoolService {
 			return Response.status(Status.BAD_REQUEST).entity("username or password is null").build();
 		}
 						
-		Users existUser = userDao.getUser(req.getUserName());
+		User existUser = userDao.getUser(req.getUserName());
 		if (existUser != null)  {
 			return Response.status(Status.BAD_REQUEST).entity("username exists.").build();
 		}
 		
-		Users user = crtUser(req);		
+		User user = crtUser(req);		
 		userDao.create(user);
 		user = userDao.getUser(user.getUserName());		
 
@@ -109,7 +109,7 @@ public class RestNurserySchoolService {
 			throw new WebApplicationException(rp);
 		}
 		
-		Users user = userDao.getUser(login.getUserName());
+		User user = userDao.getUser(login.getUserName());
 		if (user == null || !user.getPassword().equals(login.getPassword())) {
 			Response rp = Response.status(Status.BAD_REQUEST).entity("username or password mismatch.").build();
 			throw new WebApplicationException(rp);
@@ -136,12 +136,12 @@ public class RestNurserySchoolService {
 			return Response.status(Status.BAD_REQUEST).entity("username or password is null.").build();
 		}
 						
-		Schools existSchool = schoolDao.getSchool(req.getName());
+		School existSchool = schoolDao.getSchool(req.getName());
 		if (existSchool != null)  {
 			return Response.status(Status.BAD_REQUEST).entity("school exists.").build();
 		}
 		
-		Schools school = new Schools();
+		School school = new School();
 		school.setName(req.getName());
 		school.setAddress(req.getAddress()); 
 		school.setDescription(req.getDescription());
@@ -169,28 +169,28 @@ public class RestNurserySchoolService {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
 		
-		Users existUser = userDao.getUser(req.getCrtUserReq().getUserName());
+		User existUser = userDao.getUser(req.getCrtUserReq().getUserName());
 		if (existUser != null)  {
 			//throw new WebApplicationException("user exists.", Status.BAD_REQUEST);
 			return Response.status(Status.BAD_REQUEST).build();
 		}
 						
-		Schools existSchool = schoolDao.get(req.getSchoolId());
+		School existSchool = schoolDao.get(req.getSchoolId());
 		if (existSchool == null)  {
 			//throw new WebApplicationException("school doesnot exist.", Status.BAD_REQUEST);
 			return Response.status(Status.BAD_REQUEST).build();
 		}
 		
 		req.getCrtUserReq().setRole(Role.SCHOOLMASTER);
-		Users user = crtUser(req.getCrtUserReq());
+		User user = crtUser(req.getCrtUserReq());
 		
 		SchoolMaster sm = schoolMasterDao.createSchoolMaster(existSchool, user);
 
 		return Response.ok("ok.schoolMasterId="+sm.getSchoolMasterId().getUser().getId()).build();
 	}
 	
-	private Users crtUser(CreateUserReq req) {
-		Users user = new Users();
+	private User crtUser(CreateUserReq req) {
+		User user = new User();
 		user.setUserName(req.getUserName());
 		user.setPassword(req.getPassword());
 		user.setRole(req.getRole());

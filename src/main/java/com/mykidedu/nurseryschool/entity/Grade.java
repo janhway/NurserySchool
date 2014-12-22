@@ -16,13 +16,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 @Table(name = "GRADES")
-public class Grades implements Serializable {
+public class Grade implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private long id;
 	private String name;
-	private Schools school;
+	private School school;
 
 	@Id
 	@Column(name = "ID")
@@ -46,17 +46,17 @@ public class Grades implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "SCHOOLID", referencedColumnName = "ID")
-	public Schools getSchool() {
+	public School getSchool() {
 		return school;
 	}
 
-	public void setSchool(Schools school) {
+	public void setSchool(School school) {
 		this.school = school;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Grades)) {
+		if (!(obj instanceof Grade)) {
 			return false;
 		}
 
@@ -64,7 +64,7 @@ public class Grades implements Serializable {
 			return true;
 		}
 
-		Grades other = (Grades) obj;
+		Grade other = (Grade) obj;
 
 		// Using business key equality
 		return new EqualsBuilder()

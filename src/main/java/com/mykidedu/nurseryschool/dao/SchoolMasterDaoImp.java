@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.mykidedu.nurseryschool.entity.Schools;
+import com.mykidedu.nurseryschool.entity.School;
 import com.mykidedu.nurseryschool.entity.SchoolMaster;
 import com.mykidedu.nurseryschool.entity.SchoolMasterId;
-import com.mykidedu.nurseryschool.entity.Users;
+import com.mykidedu.nurseryschool.entity.User;
 
 @Repository
 public class SchoolMasterDaoImp extends BaseDaoImp<SchoolMaster> implements
@@ -17,11 +17,11 @@ public class SchoolMasterDaoImp extends BaseDaoImp<SchoolMaster> implements
 	@Autowired
 	private UserDao userDao;
 
-	public SchoolMaster createSchoolMaster(Schools school, Users user) {
+	public SchoolMaster createSchoolMaster(School school, User user) {
 
 		// 创建用户，并检查用户的id
 		userDao.create(user);
-		Users tmpUser = userDao.getUser(user.getUserName());
+		User tmpUser = userDao.getUser(user.getUserName());
 		if (tmpUser == null) {
 			return null; // 可以不抛异常
 		}

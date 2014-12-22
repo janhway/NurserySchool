@@ -17,7 +17,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 @Table(name = "STUDENTS")
-public class Students implements Serializable {
+public class Student implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -70,7 +70,7 @@ public class Students implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Students)) {
+		if (!(obj instanceof Student)) {
 			return false;
 		}
 
@@ -78,7 +78,7 @@ public class Students implements Serializable {
 			return true;
 		}
 
-		Students other = (Students) obj;
+		Student other = (Student) obj;
 
 		// 这样合适否？ 每次必须把class/grade/school全部查询出来
 		return new EqualsBuilder().append(this.classes, other.classes)

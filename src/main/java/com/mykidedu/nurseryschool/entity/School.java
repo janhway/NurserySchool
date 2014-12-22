@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "SCHOOLS", indexes = { @Index(name = "SCHOOLS_NAME_INDEX", columnList = "NAME", unique = true) })
-public class Schools implements Serializable {
+public class School implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class Schools implements Serializable {
 	private String phone;
 	private String description;
 
-	private List<Grades> gradeList;
+	private List<Grade> gradeList;
 	private List<Classes> classList;
 
 	@Id
@@ -88,11 +88,11 @@ public class Schools implements Serializable {
 	}
 	
 	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	public List<Grades> getGradeList() {
+	public List<Grade> getGradeList() {
 		return gradeList;
 	}
 
-	public void setGradeList(List<Grades> gradeList) {
+	public void setGradeList(List<Grade> gradeList) {
 		this.gradeList = gradeList;
 	}	
 	
@@ -107,7 +107,7 @@ public class Schools implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Schools)) {
+		if (!(obj instanceof School)) {
 			return false;
 		}
 
@@ -115,7 +115,7 @@ public class Schools implements Serializable {
 			return true;
 		}
 
-		Schools other = (Schools) obj;
+		School other = (School) obj;
 
         // Using business key equality
 		return this.name.equals(other.name);

@@ -6,21 +6,21 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.mykidedu.nurseryschool.dao.UserDao;
-import com.mykidedu.nurseryschool.entity.Schools;
+import com.mykidedu.nurseryschool.entity.School;
 import com.mykidedu.nurseryschool.entity.SchoolMaster;
 import com.mykidedu.nurseryschool.entity.SchoolMasterId;
-import com.mykidedu.nurseryschool.entity.Users;
+import com.mykidedu.nurseryschool.entity.User;
 
 @Repository
-public class UserDaoImp extends BaseDaoImp<Users> implements UserDao {
+public class UserDaoImp extends BaseDaoImp<User> implements UserDao {
 
 	static Logger log = Logger.getLogger(UserDaoImp.class);
 
-	public List<Users> getUsers(String userName) {
+	public List<User> getUsers(String userName) {
 
 		log.info("can you see me?-->" + userName);
 
-		List<Users> userList = (List<Users>) getCurrentSession()
+		List<User> userList = (List<User>) getCurrentSession()
 				.createQuery(
 						"select p from Users p where p.userName like :pUserName")
 				.setParameter("pUserName", "%" + userName + "%").list();
@@ -28,10 +28,10 @@ public class UserDaoImp extends BaseDaoImp<Users> implements UserDao {
 		return userList;
 	}
 
-	public Users getUser(String userName) {
+	public User getUser(String userName) {
 		// log.info("can you see me?-->" + userName);
 
-		List<Users> userList = (List<Users>) getCurrentSession()
+		List<User> userList = (List<User>) getCurrentSession()
 				.createQuery(
 						"select p from Users p where p.userName = :pUserName")
 				.setParameter("pUserName", userName).list();

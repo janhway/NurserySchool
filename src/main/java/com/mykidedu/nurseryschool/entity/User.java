@@ -12,12 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 @Entity
 @Table(name = "USERS", indexes = { @Index(name = "USERS_USERNAME_INDEX", columnList = "USERNAME", unique = true) })
-public class Users implements Serializable {
+public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -139,7 +136,7 @@ public class Users implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Users)) {
+		if (!(obj instanceof User)) {
 			return false;
 		}
 
@@ -147,7 +144,7 @@ public class Users implements Serializable {
 			return true;
 		}
 
-		Users other = (Users) obj;
+		User other = (User) obj;
 
         // Using business key equality
 		return this.userName.equals(other.userName);

@@ -15,7 +15,7 @@ public class TeacherId implements Serializable {
 
 	private static final long serialVersionUID = 7338973140234139520L;
 
-	private Users user;
+	private User user;
 	private Classes classRoom;
 
 	@ManyToOne
@@ -32,11 +32,11 @@ public class TeacherId implements Serializable {
 	@ManyToOne
 	// (cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "USERID", referencedColumnName = "ID")
-	public Users getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(Users user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

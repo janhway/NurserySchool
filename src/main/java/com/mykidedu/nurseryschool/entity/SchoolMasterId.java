@@ -15,28 +15,28 @@ public class SchoolMasterId implements Serializable {
 
 	private static final long serialVersionUID = 7338973140234139520L;
 
-	private Users user;
-	private Schools school;
+	private User user;
+	private School school;
 
 	@ManyToOne
 	// (cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "SCHOOLID", referencedColumnName = "ID")
-	public Schools getSchool() {
+	public School getSchool() {
 		return school;
 	}
 
-	public void setSchool(Schools school) {
+	public void setSchool(School school) {
 		this.school = school;
 	}
 
 	@ManyToOne
 	// (cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "USERID", referencedColumnName = "ID")
-	public Users getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(Users user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

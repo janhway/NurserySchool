@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.mykidedu.nurseryschool.entity.Schools;
+import com.mykidedu.nurseryschool.entity.School;
 
 @Repository
-public class SchoolDaoImp extends BaseDaoImp<Schools> implements SchoolDao {
+public class SchoolDaoImp extends BaseDaoImp<School> implements SchoolDao {
 
 	// static Logger log = Logger.getLogger(SchoolDaoImp.class);
 
-	public Schools getSchool(String name) {
+	public School getSchool(String name) {
 
-		List<Schools> list = (List<Schools>) getCurrentSession()
+		List<School> list = (List<School>) getCurrentSession()
 				.createQuery("select p from Schools p where p.name = :pName")
 				.setParameter("pName", name).list();
 

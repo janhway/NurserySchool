@@ -22,8 +22,8 @@ public class Classes implements Serializable {
 
 	private long id;
 	private String name;
-	private Schools school;
-	private Grades grade;
+	private School school;
+	private Grade grade;
 
 	@Id
 	@Column(name = "ID")
@@ -47,21 +47,21 @@ public class Classes implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "SCHOOLID", referencedColumnName = "ID")
-	public Schools getSchool() {
+	public School getSchool() {
 		return school;
 	}
 
-	public void setSchool(Schools school) {
+	public void setSchool(School school) {
 		this.school = school;
 	}
 
 	@ManyToOne
 	@JoinColumn(name = "GRADEID", referencedColumnName = "ID")
-	public Grades getGrades() {
+	public Grade getGrades() {
 		return grade;
 	}
 
-	public void setGrades(Grades grade) {
+	public void setGrades(Grade grade) {
 		this.grade = grade;
 	}
 

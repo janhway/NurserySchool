@@ -1,11 +1,11 @@
 package com.mykidedu.nurseryschool.dao;
 
 import java.util.List;
-import com.mykidedu.nurseryschool.entity.Users;
+import com.mykidedu.nurseryschool.entity.User;
 
-public interface UserDao extends BaseDao<Users> {
+public interface UserDao extends BaseDao<User> {
 
-	public List<Users> getUsers(String userName);
+	public List<User> getUsers(String userName);
 	
-	public Users getUser(String userName);
+	public User getUser(String userName);
 }
